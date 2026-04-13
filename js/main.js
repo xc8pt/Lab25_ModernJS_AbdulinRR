@@ -271,6 +271,7 @@ step1()
 */
 
 // 9.3. Практическое задание
+/*
 const Inventory = new Promise((resolve, reject) => {
     const success = true;
     if (success) {
@@ -294,4 +295,117 @@ function checkInventory() {
             reject(`На складе нету товара: Moloko`);
         }
     });
+};
+*/
+
+// Шаг 10. Async/Await
+/*
+async function greet() {
+    return "Привет!";
 }
+greet().then((message) => console.log(message));
+
+function getWeather() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ temp: 22, condition: "Солнечно" });
+        }, 1000);
+    });
+};
+
+async function showWeather() {
+    console.log("Загрузка погоды...");
+    const weather = await getWeather();
+    console.log(`Температура: ${weather.temp}C, ${weather.condition}`);
+}
+showWeather();
+*/
+
+// Обработка ошибок с try/catch:
+/*
+async function fetchData(shouldFail) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (shouldFail) {
+                reject("Ошибка при загрузке данных");
+            } else {
+                resolve({ data: "Важные данные" });
+            }
+        }, 800);
+    });
+}
+async function getData() {
+    try {
+        const result = await fetchData(false);
+        console.log("Успешно:", result.data);
+
+        const finalResult = await fetchData(true);
+        console.log("Это не выполнится");
+    } catch (error) {
+        console.log("Поймана ошибка:",error);
+    }
+}
+getData();
+*/
+// Последовательное выполнение:
+/*
+async function cookDinner() {
+    console.log("Начинаем готовить...");
+
+    const pasta = await delay(1000).then(() => "Паста готова");
+    console.log(pasta);
+
+    const sauce = await delay(500).then(() => "Соус готов");
+    console.log(sauce);
+
+    const salad = await delay(1000).then(() => "Салат готов");
+    console.log(salad);
+
+    return "Ужин готов!";
+}
+function delay(ms) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(`Прошло ${ms} миллисекунд`);
+        }, ms);
+    });
+}
+cookDinner().then((result) => console.log(result));
+// Параллельное выполнение с Promise.all:
+async function cookDinnerFast() {
+    console.log("Готовим всё одновременно...");
+
+    const [pasta, sauce, salad] = await Promise.all([
+        delay(1000).then(() => "Паста готова"),
+        delay(500).then(() => "Соус готов"),
+        delay(700).then(() => "Салат готов"),
+    ]);
+
+    console.log(pasta, sauce, salad);
+    return "Ужин готов. 'Садитесь жрать, пожалуйста!'"
+}
+*/
+
+// 10.3. Практическое задание
+async function processOrder() {
+    console.log("Начинаем работу...");
+
+    const st1 = await delay(1000).then(() => "Проверяем наличие товара");
+    console.log(st1);
+
+    const st2 = await delay(500).then(() => "Проводим расчёт стоимости");
+    console.log(st2);
+
+    const st3 = await delay(1000).then(() => "Подтверждение заказа");
+    console.log(st3);
+
+    return "Заказ выполнен";
+}
+function delay(ms) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(`Прошло ${ms} миллисекунд`);
+        }, ms);
+    });
+}
+processOrder().then((result) => console.log(result));
