@@ -448,6 +448,7 @@ async function getUserById(id) {
 getUserById(1);
 */
 // POST-запрос (создание данных):
+/*
 async function createPost() {
     try {
         const newPost = {
@@ -471,3 +472,149 @@ async function createPost() {
     }
 }
 createPost();
+*/
+// Шаг 12. Optional Chaining и Nullish Coalescing
+/*
+const user1 = {
+    name: "Rinat",
+    address: {
+        city: "Volzchky",
+        street: "Mira",
+    },
+};
+const user2 = {
+    name: "Alesha",
+};
+const city1 = user2.address && user2.address.city;
+console.log("Город (старый способ):", city1);
+
+const city2 = user2.address?.city;
+console.log("Город (новый способ):", city2);
+
+const street = user1.address?.street;
+console.log("Street:", street);
+*/
+// Optional chaining с методами:
+/*
+const admin = {
+    name: "Admin",
+    permissions: {
+        canDelete: () => true,
+    },
+};
+const guest = {
+    name: "Гость"
+};
+console.log("Админ может удалять?", admin.permissions?.canDelete?.());
+console.log("Гость может удалять?", guest.permissions?.canDelete?.());
+*/
+// Optional chaining с массивами:
+/*
+const company = {
+    name: "Tech Corp",
+    employees: [
+        { name: "Rinat", role: "Developer" },
+        { name: "Vlad", role: "Designer" },
+    ],
+};
+
+const startup = {
+    name: "New Startup",
+};
+
+console.log("Первый сотрудник:", company.employees?.[0]?.name);
+console.log("Первый сотрудник стартапа:", startup.employees?.[0]?.name);
+*/
+// 12.3. Nullish Coalescing (??)
+/*
+const value1 = 0;
+const value2 = "";
+const value3 = false;
+const value4 = null;
+const value5 = undefined;
+
+console.log(`value1 || "default:`, value1 || "default");
+console.log(`value2 || "default:`, value2 || "default");
+console.log(`value3 || "default:`, value3 || "default");
+
+console.log(`value1 ?? "default:`, value1 ?? "default");
+console.log(`value2 ?? "default:`, value2 ?? "default");
+console.log(`value3 ?? "default:`, value3 ?? "default");
+console.log(`value4 ?? "default:`, value4 ?? "default");
+console.log(`value5 ?? "default:`, value5 ?? "default");
+*/
+// Практический пример:
+/*
+function displayUserSettings(settings) {
+    const theme = settings?.theme ?? "light";
+    const fontSize = settings?.fontSize ?? 14;
+    const notifications = settings?.notifications ?? true;
+
+    console.log("Настройки пользователя:");
+    console.log("Тема:", theme);
+    console.log("Размер шрифта:", fontSize);
+    console.log("Уведомления:", notifications);
+}
+displayUserSettings({ theme: "dark", fontSize: 16 });
+displayUserSettings({ notifications: false });
+displayUserSettings({});
+*/
+// Комбинирование операторов:
+/*
+const apiResponse = {
+    data: {
+        user: {
+            profile: {
+                settings: {
+                    language: "ru",
+                },
+            },
+        },
+    },
+};
+const language = apiResponse?.data?.user?.profile?.settings?.language ?? "en";
+console.log("Язык:", language);
+
+const emptyResponse = {};
+const defaultLanguage = emptyResponse?.data?.user?.profile?.settings?.language ?? "en";
+console.log("Язык по умолчанию:", defaultLanguage);
+*/
+
+// 12.4. Практическое задание
+const order = {
+  customer: {
+    name: "Rinat Abdulin",
+    email: "brolike636@gmail.com"
+  },
+  shipping: {
+    address: "г. Волжский, ул.Мира 147",
+    city: "Волжский",
+    zipCode: null
+  },
+  payment: {
+    method: "Банковская карта",
+    status: "Оплачено"
+  }
+};
+
+function displayOrder(order) {
+  const customerName = order?.customer?.name ?? "Не указано";
+  const customerEmail = order?.customer?.email ?? "Не указано";
+
+  const shippingAddress = order?.shipping?.address ?? "Не указано";
+  const shippingCity = order?.shipping?.city ?? "Не указано";
+  const shippingZip = order?.shipping?.zipCode ?? "Не указано";
+
+  const paymentMethod = order?.payment?.method ?? "Не указано";
+  const paymentStatus = order?.payment?.status ?? "Не указано";
+
+  console.log("=== Информация о заказе ===");
+  console.log(`Покупатель: ${customerName}`);
+  console.log(`Email: ${customerEmail}`);
+  console.log(`Адрес доставки: ${shippingAddress}`);
+  console.log(`Город: ${shippingCity}`);
+  console.log(`Индекс: ${shippingZip}`);
+  console.log(`Способ оплаты: ${paymentMethod}`);
+  console.log(`Статус оплаты: ${paymentStatus}`);
+}
+displayOrder(order);
